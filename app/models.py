@@ -58,7 +58,7 @@ class User(UserMixin, db.Model):
 
     def izleti_prijatelja(self): #uključuje moje izlete, izlete od befriendera, i izlete befriendeda
         i_befriended=Izlet.query.join(friends,(friends.c.befriended_id==Izlet.creator_id)).filter(friends.c.befriender_id==self.id)
-        own=Izlet.query.filter_by(creator_id==self.id)
+        own=Izlet.query.filter_by(creator_id=self.id)
         prvi_dio=i_befriended.union(own)
         befriended_me=Izlet.query.join(friends,(friends.c.befriended_id==self.id)).filter(friends.c.befriender_id==Izlet.creator_id)
         return prvi_dio.union(befriended_me).order_by(Izlet.timestamp.desc())
