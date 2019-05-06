@@ -1,7 +1,9 @@
 {% extends "base.html" %}
 
+
+
 {% block content %}
-    <h1>Dobrošli na stranicu za izlete. Za sad nemamo ništa, al bi će!</h1>
-    
-    <p>Diste</p>
+    <h1>Hi, {{ current_user.username }}!</h1>
+    {% for post in posts %}
+    {% endfor %}
 {% endblock %}
