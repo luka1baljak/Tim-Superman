@@ -2,9 +2,9 @@ from app import db
 from datetime import datetime
 
 
-je_sudionik=db.Table('je_sudionik',
+tablica_povezivanja=db.Table('tablica_povezivanja',
     db.Column('izlet_id', db.Integer, db.ForeignKey('izlet.id')),
-    db.Column('sudionik_id',db.Integer, db.ForeignKey('user.id'))
+    db.Column('user_id',db.Integer, db.ForeignKey('user.id'))
     )
 
 class User(db.Model):
@@ -36,7 +36,7 @@ class Izlet(db.Model):
     opis=db.Column(db.String(500), nullable=True)
     creator_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
-    sudionici=db.relationship("User", secondary=je_sudionik)
+    sudionici=db.relationship("User", secondary=tablica_povezivanja)
 
     def __repr__(self):
         return '<Izlet {}>'.format(self.naziv)
