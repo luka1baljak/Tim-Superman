@@ -44,7 +44,24 @@ class User(UserMixin, db.Model):
     def check_password(self,password):
         return check_password_hash(self.password_hash, password)
 
+    def befriend(self, user):
+        if not self.is_friends(user):
+            self.befriended.append(user)
 
+    def unfriend(self, user):
+        if self.is_friends(user):
+            self.befriended.remove(user)
+
+    def is_friends(self, user):
+        return self.befriended.filter(
+            friends.c.befriended_id == user.id).count() > 0
+
+    def izleti_prijatelja(self): #uključuje moje izlete, izlete od befriendera, i izlete befriendeda
+        i_befriended=Izlet.query.join(friends,(friends.c.befriended_id==Izlet.creator_id)).filter(friends.c.befriender_id==self.id)
+        own=Izlet.query.filter_by(creator_id==self.id)
+        prvi_dio=i_befriended.union(own)
+        befriended_me=Izlet.query.join(friends,(friends.c.befriended_id==self.id)).filter(friends.c.befriender_id==Izlet.creator_id)
+        return prvi_dio.union(befriended_me).order_by(Izlet.timestamp.desc())
 
 class Izlet(db.Model):
     id=db.Column(db.Integer,primary_key=True)
