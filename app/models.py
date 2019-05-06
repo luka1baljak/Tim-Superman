@@ -5,6 +5,13 @@ from app import login
 from flask_login import UserMixin
 
 
+friends=db.Table('friends',
+    db.Column('befriender_id',db.Integer,db.ForeignKey('user.id')),
+    db.Column('befriended_id',db.Integer,db.ForeignKey('user.id'))
+    )
+
+
+
 tablica_povezivanja=db.Table('tablica_povezivanja',
     db.Column('izlet_id', db.Integer, db.ForeignKey('izlet.id')),
     db.Column('user_id',db.Integer, db.ForeignKey('user.id'))
@@ -21,6 +28,12 @@ class User(UserMixin, db.Model):
     broj_telefona=db.Column(db.String(20), nullable=True)
     o_meni=db.Column(db.String(400), nullable=True)
     izleti = db.relationship('Izlet', backref='creator', lazy='dynamic')
+    befriended=db.relationship(
+        'User',secondary=friends,
+        primaryjoin=(friends.c.befriender_id==id),
+        secondaryjoin=(friends.c.befriended_id==id),
+        backref=db.backref('friends',lazy='dynamic'),lazy='dynamic')
+
 
     def __repr__(self):
         return '<User {}, a moje ime je {}>'.format(self.username, self.ime)
