@@ -5,6 +5,7 @@ from app.models import User
 from flask_wtf.file import FileField, FileRequired, FileAllowed
 from flask_uploads import UploadSet, configure_uploads, IMAGES, patch_request_class
 from app import photos
+from wtforms.validators import DataRequired, Length
 
 class LoginForm(FlaskForm):
     username=StringField('Username', validators=[DataRequired()])
@@ -41,3 +42,13 @@ class RegistrationForm(FlaskForm):
 class UploadForm(FlaskForm):
     photo = FileField(validators=[FileAllowed(photos, u'Image only!'), FileRequired(u'File was empty!')])
     submit = SubmitField(u'Upload')
+
+
+class EditProfileForm(FlaskForm):
+    username = StringField('Username', validators=[DataRequired()])
+    ime = StringField('Ime', validators=[DataRequired()])
+    prezime = StringField('Prezime', validators=[DataRequired()])
+    datum_rodjenja=DateField('Datum rođenja',format='%d/%m/%Y')
+    broj_telefona=StringField('Broj telefona')
+    o_meni=TextAreaField('O meni',validators=[Length(min=0, max=399)])
+    submit = SubmitField('Spremi promjene')

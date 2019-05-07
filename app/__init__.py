@@ -12,10 +12,9 @@ db=SQLAlchemy(app)
 migrate=Migrate(app,db)
 login=LoginManager(app)
 login.login_view='login'
-
-app.config['UPLOADED_PHOTOS_DEST'] = os.getcwd()
-
 photos = UploadSet('photos', IMAGES)
+
+app.config['UPLOADED_PHOTOS_DEST'] = '/static/img'
 configure_uploads(app, photos)
 patch_request_class(app)
 

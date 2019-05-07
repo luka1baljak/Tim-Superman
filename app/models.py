@@ -62,6 +62,8 @@ class User(UserMixin, db.Model):
         prvi_dio=i_befriended.union(own)
         befriended_me=Izlet.query.join(friends,(friends.c.befriended_id==self.id)).filter(friends.c.befriender_id==Izlet.creator_id)
         return prvi_dio.union(befriended_me).order_by(Izlet.timestamp.desc())
+    
+        
 
 class Izlet(db.Model):
     id=db.Column(db.Integer,primary_key=True)
@@ -83,3 +85,10 @@ class Izlet(db.Model):
 def load_user(id):
     return User.query.get(int(id))
 
+
+class Profilepicture(db.Model):
+    id=db.Column(db.Integer,primary_key=True)
+    name=db.Column(db.String(300))
+
+    def __repr__(self):
+        return '<Profilepicture {}>'.format(self.name)
