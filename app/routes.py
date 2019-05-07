@@ -8,7 +8,8 @@ from flask import request
 from werkzeug.urls import url_parse
 from app import db
 from app.forms import RegistrationForm
-
+from app.forms import UploadForm
+from app import photos
 
 @app.route('/')
 @app.route('/index')
@@ -59,5 +60,17 @@ def user(username):
     user = User.query.filter_by(username=username).first_or_404()
     
     return render_template('user.html', user=user)
+
+
+@app.route('/profilepicture', methods=['GET', 'POST'])
+@login_required
+def pp():
+    form = UploadForm()
+    if form.validate_on_submit():
+        filename = photos.save(form.photo.data)
+        file_url = photos.url(filename)
+    else:
+        file_url = None
+    return render_template('pp.html', form=form, file_url=file_url)
 
 

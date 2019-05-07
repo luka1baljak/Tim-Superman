@@ -1,10 +1,10 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, DateField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, DateField, FileField
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
 from app.models import User
-
-
-
+from flask_wtf.file import FileField, FileRequired, FileAllowed
+from flask_uploads import UploadSet, configure_uploads, IMAGES, patch_request_class
+from app import photos
 
 class LoginForm(FlaskForm):
     username=StringField('Username', validators=[DataRequired()])
@@ -35,3 +35,9 @@ class RegistrationForm(FlaskForm):
         user = User.query.filter_by(email=email.data).first()
         if user is not None:
             raise ValidationError('Email se vec koristi. Molimo unesite drugi email.')
+
+
+
+class UploadForm(FlaskForm):
+    photo = FileField(validators=[FileAllowed(photos, u'Image only!'), FileRequired(u'File was empty!')])
+    submit = SubmitField(u'Upload')
