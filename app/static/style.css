@@ -1,0 +1,244 @@
+body {
+	background-color: #f4f4f4;
+}
+
+h1,h2,h3,h4 {
+	color:#FF8C00;
+}
+
+a {
+	color:#FF8C00;
+}
+
+a:hover {
+
+ color:#39dc79;
+}
+
+/* navmenu */
+
+.navbar-dark .navbar-nav 
+
+{
+	font-size: 20px !important;
+	
+}
+
+
+.dropdown-item {
+
+	color:#FF8C00;
+	font-size: 20px !important;
+
+}
+
+.dropdown .dropdown-menu .dropdown-item:active, .dropdown .dropdown-menu .dropdown-item:hover{background-color: #ff8c00 !important;}
+
+/* main */
+
+.main {
+	width: 100%;
+	padding: 10px;
+}
+
+/* footer */
+
+.bg-dark {
+    background-color: #FF8C00 !important;
+}
+
+
+/* rotator-slika */
+
+.carousel-item {
+  height: 65vh;
+  min-height: 300px;
+  background: no-repeat center center scroll;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+/* features - popis izleta  */
+
+.features
+
+{
+	padding: 100px 0;
+}
+
+h1 {
+	text-align:center;
+	padding-bottom: 30px;
+}
+.feature-img img
+{
+	width:100%;
+
+}
+
+.price
+{
+	width:60px;
+	height:60px;
+	background:#ff5722;
+	color:#ffffff;
+	font-weight: 600;
+	border-radius: 60%;
+	padding:12px;
+	box-shadow: 0 0 10px 1px rgba(37,73,214,0.18);
+	position:absolute;
+	left:20px;
+	bottom:-25px;
+
+}
+
+.feature-img
+
+{
+
+ position:relative;
+
+}
+
+.rating {
+
+	padding : 3px;
+	float:right;
+	background:#fff;
+	bottom:-1px;
+	right:0;
+	position:absolute;
+}
+
+.features .fa
+
+{
+	font-size: 15px;
+	color:#ff5722;
+}
+
+.feature-details
+
+{
+
+	padding:20px;
+	text-align:justify;	
+}
+
+.features-details h4
+
+{
+ font-weight: 600;
+ margin-top:20px;
+
+}
+
+.feature-box
+
+{
+box-shadow: 0 0 10px 1px rgba(37,73,214,0.18);
+margin-bottom:30px;
+
+}
+
+.feature-box:hover
+
+{
+box-shadow: 0 0 10px 1px rgba(249, 105, 14,0.5);
+
+
+}
+
+/* submit button */
+
+.btn-primary {
+	background-color:#FF8C00;
+	border-color:#FF8C00;
+}
+
+.btn-primary:hover {
+	background-color:#39dc79;
+	border-color:#39dc79;
+}
+
+.btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active, .show>.btn-primary.dropdown-toggle {
+
+background-color:#39dc79;
+border-color:#39dc79;
+
+}
+
+/* Korisnik-lista korisnika */
+
+.korisnik {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  max-width: 150px;
+  margin: auto;
+  text-align: center;
+}
+
+.korisnik a {
+  text-decoration: none;
+  font-size: 12px;
+}
+
+.korisnik:hover {
+  box-shadow: 0 0 10px 1px rgba(249, 105, 14,0.5);
+}
+
+/* font awesome ikone */
+
+.fa-undo
+
+{
+   color:#FF8C00;
+}
+
+/* Respozivna google mapa (div class & iframe class) */
+
+.googlemapa {
+	height: 0;
+	overflow: hidden;
+	padding-bottom: 60%; /* aspect ratio */
+	position: relative;
+}
+
+.googlemap {
+	border: 0;
+	height: 100%;
+	left: 0;
+	position: absolute;
+	top: 0;
+	width: 100%;
+}
+
+/* Responsive box-sizing */
+
+html {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  -webkit-box-sizing: inherit;
+  -moz-box-sizing: inherit;
+  box-sizing: inherit;
+  }
+
+  .gj-picker-md [role=header] 
+{
+	    background: #FF8C00 !important; 
+}
+
+.gj-picker-md [role=footer] button.gj-button-md {
+    color: #FF8C00 !important;
+
+    }
+
+ .gj-picker-md [role=switch] {
+    color: rgba(255,255,255,.54);
+    background: #FF8C00 !important;
+    font-size: 32px;
+}

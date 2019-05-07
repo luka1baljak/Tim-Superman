@@ -24,7 +24,7 @@ class RegistrationForm(FlaskForm):
     datum_rodjenja=DateField('Datum rođenja',format='%d/%m/%Y')
     broj_telefona=StringField('Broj telefona')
     o_meni=TextAreaField('O meni')
-    submit=SubmitField('Registriraj se')
+    submit=SubmitField('Register')
 
     def validate_username(self, username):
         user = User.query.filter_by(username=username.data).first()
