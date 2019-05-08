@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Hi, {{ current_user.username }}!</h1>
+    
+    {% for k in korisnici %}
+    <p>
+    {{ k.username }} je na listi korisnika.
+    </p>
+    {% endfor %}
+{% endblock %}

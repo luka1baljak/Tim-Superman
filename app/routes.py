@@ -160,3 +160,14 @@ def dodajizlet():
         return redirect(url_for('index'))    
     return render_template('dodajizlet.html', title='Dodaj izlet',form=form)
 
+@app.route('/svi_korisnici')
+@login_required
+def svi_korisnici():
+    korisnici=User.query.filter(User.id!=current_user.id)
+    return render_template('svi_korisnici.html', title='Korisnici',korisnici=korisnici)
+
+@app.route('/svi_izleti')
+@login_required
+def svi_izleti():
+    izleti=Izlet.query.all()
+    return render_template('svi_izleti.html', title='Izleti',izleti=izleti)
