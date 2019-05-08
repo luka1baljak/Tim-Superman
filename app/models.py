@@ -27,6 +27,7 @@ class User(UserMixin, db.Model):
     datum_rodjenja=db.Column(db.Date, nullable=True)
     broj_telefona=db.Column(db.String(20), nullable=True)
     o_meni=db.Column(db.String(400), nullable=True)
+    profilna_slika=db.Column(db.String(300), nullable=True)
     izleti = db.relationship('Izlet', backref='creator', lazy='dynamic')
     befriended=db.relationship(
         'User',secondary=friends,
@@ -36,7 +37,7 @@ class User(UserMixin, db.Model):
 
 
     def __repr__(self):
-        return '<User {}, a moje ime je {}>'.format(self.username, self.ime)
+        return '<User {}, a moje ime je {}, i ja imam profilnu naziva {}.>'.format(self.username, self.ime,self.profilna_slika)
 
     def set_password(self,password):
         self.password_hash=generate_password_hash(password)
@@ -81,14 +82,10 @@ class Izlet(db.Model):
     def __repr__(self):
         return '<Izlet {}>'.format(self.naziv)
 
+
+
 @login.user_loader
 def load_user(id):
     return User.query.get(int(id))
 
 
-class Profilepicture(db.Model):
-    id=db.Column(db.Integer,primary_key=True)
-    name=db.Column(db.String(300))
-
-    def __repr__(self):
-        return '<Profilepicture {}>'.format(self.name)

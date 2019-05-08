@@ -2,14 +2,7 @@
 
 {% block content %}
     <h1>Edit Profile</h1>
-    <h1>File Input</h1>
-    <form method="POST" action="/upload" enctype="multipart/form-data">
-        <label for="inputFile">File input</label>
-        <input type="file" name="inputFile">
-    
-        <input type="submit" name="">
-    </form>
-    <form action="" method="post">
+ 
         {{ form.hidden_tag() }}
         <p>
             {{ form.username.label }}<br>

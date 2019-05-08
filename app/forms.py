@@ -4,7 +4,7 @@ from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
 from app.models import User
 from flask_wtf.file import FileField, FileRequired, FileAllowed
 from flask_uploads import UploadSet, configure_uploads, IMAGES, patch_request_class
-from app import photos
+
 from wtforms.validators import DataRequired, Length
 
 class LoginForm(FlaskForm):
@@ -37,11 +37,6 @@ class RegistrationForm(FlaskForm):
         if user is not None:
             raise ValidationError('Email se vec koristi. Molimo unesite drugi email.')
 
-
-
-class UploadForm(FlaskForm):
-    photo = FileField(validators=[FileAllowed(photos, u'Image only!'), FileRequired(u'File was empty!')])
-    submit = SubmitField(u'Upload')
 
 
 class EditProfileForm(FlaskForm):

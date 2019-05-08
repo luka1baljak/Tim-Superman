@@ -6,12 +6,14 @@ from app.models import User
 from flask_login import logout_user, login_required
 from flask import request
 from werkzeug.urls import url_parse
+from werkzeug.utils import secure_filename 
 from app import db
 from app.forms import RegistrationForm
-from app.forms import UploadForm
-from app import photos
 from app.forms import EditProfileForm
-from app.models import Profilepicture
+import os
+from flask import Flask, render_template, request
+from werkzeug import secure_filename
+
 
 
 @app.route('/')
@@ -66,17 +68,6 @@ def user(username):
 
 
 
-@app.route('/upload', methods=['POST'])
-def upload():
-    file=request.files['inputFile']
-
-    pic=Profilepicture(name=file.filename)
-
-    db.session.add(pic)
-    db.session.commit()
-
-    return 'Saved' + file.filename + 'to the db'
-
 
 
 @app.route('/edit_profile', methods=['GET', 'POST'])
@@ -101,5 +92,19 @@ def edit_profile():
         form.broj_telefona.data = current_user.broj_telefona
         form.o_meni.data = current_user.o_meni
     return render_template('edit_profile.html', title='Edit Profile',form=form)
+
+
+
+@app.route('/upload')
+def upload():
+   return render_template('upload.html')
+    
+@app.route('/pp', methods = ['GET', 'POST'])
+def pp():
+   if request.method == 'POST':
+      f = request.files['file']
+      f.save(secure_filename(f.filename))
+      f.save(os.path.join(app.config['UPLOAD_FOLDER'], f.filename))
+      return 'file uploaded successfully'
 
 
