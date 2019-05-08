@@ -267,7 +267,7 @@ html {
 
 
 
-.fa-user , .fa-suitcase-rolling , .fa-mouse-pointer {
+.fa-user , .fa-suitcase-rolling , .fa-mouse-pointer, .fa-map-marker-alt{
     margin: 0 auto;
     float: none;
     display: table;

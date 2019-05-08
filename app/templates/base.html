@@ -28,11 +28,11 @@
           Izleti
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="popisizleta.html">Popis izleta</a>
+          <a class="dropdown-item" href="{{url_for('svi_izleti')}}">Popis izleta</a>
           <a class="dropdown-item" href="{{url_for('dodajizlet')}}">Dodaj izlet</a>
         </div>
         <li class="nav-item">
-        <a class="nav-link" href="popiskorisnika.html">Korisnici <span class="sr-only">(current)</span></a> 
+        <a class="nav-link" href="{{url_for('svi_korisnici')}}">Korisnici <span class="sr-only">(current)</span></a> 
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#">Poruke <span class="sr-only">(current)</span></a> 
@@ -43,8 +43,9 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="{{ url_for('user', username=current_user.username) }}">{{ current_user.username }}</a>
-          <a class="dropdown-item" href="profil.html">Uredi</a>
-          <a class="dropdown-item" href="mojiprijatelji.html">Moji Prijatelji</a>
+          <a class="dropdown-item" href="{{url_for('edit_profile')}}">Uredi profil</a>
+          <a class="dropdown-item" href="{{url_for('moji_prijatelji')}}">Moji Prijatelji</a>
+          <a class="dropdown-item" href="{{url_for('moji_izleti')}}">Moji Izleti</a>
           <a class="dropdown-item" href="{{url_for('logout')}}">Odjava</a>
         </div>
         

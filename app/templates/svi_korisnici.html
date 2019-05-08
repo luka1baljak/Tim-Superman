@@ -1,11 +1,33 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Hi, {{ current_user.username }}!</h1>
-    
-    {% for k in korisnici %}
-    <p>
-    {{ k.username }} je na listi korisnika.
-    </p>
-    {% endfor %}
-{% endblock %}
+
+<section class="features">
+<div class="container">
+<div class="container">
+<div class="row">
+
+
+		{% for korisnik in korisnici %}
+		
+		<div class="col-sm-4">
+			<div class="korisnik">
+			<a href="url_for">  <img src="static/pictures/korisnik.jpg" class="img-fluid" > </a>
+			  <h4>{{korisnik.ime}} {{korisnik.prezime}}</h4>
+			</div>
+			</div>
+		
+		{% endfor %}
+	</div>
+	</div>
+</div>
+</section>
+
+<footer class="py-5 bg-dark ">
+    <div class="container">
+      <p class="m-0 text-center text-white">Sva prava pridržana  &copy; Izleti.hr 2019</p>
+    </div>
+ </footer>
+
+ {% endblock %}
+

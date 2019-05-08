@@ -1,67 +1,86 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Edit Profile</h1>
- <form action="" method="post" novalidate>
-        {{ form.hidden_tag() }}
-        <p>
-            {{ form.username.label }}<br>
-            {{ form.username(size=32) }}<br>
-            {% for error in form.username.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
+<section class="features">
+<div class="container">
+   <div class="row">
+      <div class="col-md-12">
+        <h3>Uredi profil</h3>
+        <form action="" method="post name="dodajizlet" id="dodajizlet" novalidate>
+          <div class="control-group form-group">
+            <div class="controls">
+                {{ form.username.label }}<br>
+                {{ form.username(class="form-control",id="ime") }}<br>
+                {% for error in form.username.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </div>
+          </div>
 
-        <p>
-            {{ form.ime.label }}<br>
-            {{ form.ime(size=32) }}<br>
-            {% for error in form.ime.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
+          <div class="control-group form-group">
+            <div class="controls">
+                {{ form.ime.label }}<br>
+                {{ form.ime(class="form-control",id="ime") }}<br>
+                {% for error in form.ime.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </div>
+          </div>
 
-        <p>
-            {{ form.prezime.label }}<br>
-            {{ form.prezime(size=32) }}<br>
-            {% for error in form.prezime.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
+          <div class="control-group form-group">
+            <div class="controls">
+                {{ form.prezime.label }}<br>
+                {{ form.prezime(class="form-control",id="ime") }}<br>
+                {% for error in form.prezime.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </div>
+          </div>
 
-        <p>
-            {{ form.datum_rodjenja.label }}<br>
-            {{ form.datum_rodjenja(size=32) }}<br>
-            {% for error in form.datum_rodjenja.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
+          <div class="control-group form-group">
+            <div class="controls">
+                {{ form.datum_rodjenja.label }}<br>
+                {{ form.datum_rodjenja(class="form-control",id="ime") }}<br>
+                {% for error in form.datum_rodjenja.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </div>
+          </div>
 
-        <p>
-            {{ form.broj_telefona.label }}<br>
-            {{ form.broj_telefona(size=32) }}<br>
-            {% for error in form.broj_telefona.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
+          <div class="control-group form-group">
+            <div class="controls">
+                {{ form.broj_telefona.label }}<br>
+                {{ form.broj_telefona(class="form-control",id="ime") }}<br>
+                {% for error in form.broj_telefona.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </div>
+          </div>
 
-        <p>
-            {{ form.o_meni.label }}<br>
-            {{ form.o_meni(size=32) }}<br>
-            {% for error in form.o_meni.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>{{ form.submit() }}</p>
-        
-    </form>
+          <div class="control-group form-group">
+            <div class="controls">
+                {{ form.o_meni.label }}<br>
+                {{ form.o_meni(rows="10", cols="100", class="form-control", id="omeni", maxlength="999" ,style="resize:none") }}<br>
+                {% for error in form.o_meni.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </div>
+          </div>
 
-            {% with messages = get_flashed_messages() %}
-          {% if messages %}
-            <ul class=flashes>
-            {% for message in messages %}
-              <li>{{ message }}</li>
-            {% endfor %}
-            </ul>
-          {% endif %}
-        {% endwith %}
+          <div id="success"></div>
+          <!-- For success/fail messages -->
+          <p>{{ form.submit(class="btn btn-primary",id="sendMessageButton") }}</p>
+        </form>
+
+      </div>
+      </div>
+      </div>
+   </section>
+<!-- Footer -->
+<footer class="py-5 bg-dark ">
+    <div class="container">
+      <p class="m-0 text-center text-white">Sva prava pridržana  &copy; Izleti.hr 2019</p>
+    </div>
+ </footer>
 {% endblock %}
+

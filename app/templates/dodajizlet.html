@@ -1,58 +1,118 @@
 {% extends "base.html" %}
 
-{% block content %}
-    <h1>Kreiraj izlet</h1>
-    <form action="" method="post" novalidate>
- 
-        {{ form.hidden_tag() }}
-        <p>
-            {{ form.naziv.label }}<br>
-            {{ form.naziv(size=32) }}<br>
-            {% for error in form.naziv.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-
-        <p>
-            {{ form.lokacija.label }}<br>
-            {{ form.lokacija(size=32) }}<br>
-            {% for error in form.lokacija.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-
-        <p>
-            {{ form.opis.label }}<br>
-            {{ form.opis(size=32) }}<br>
-            {% for error in form.opis.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-
-        <p>
-            {{ form.datum_polaska.label }}<br>
-            {{ form.datum_polaska(size=32) }}<br>
-            {% for error in form.datum_polaska.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-
-        <p>
-            {{ form.datum_povratka.label }}<br>
-            {{ form.datum_povratka(size=32) }}<br>
-            {% for error in form.datum_povratka.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-
-        <p>
-            {{ form.cijena.label }}<br>
-            {{ form.cijena(size=32) }}<br>
-            {% for error in form.cijena.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        
-        <p>{{ form.submit() }}</p>
-    </form>
+{% block head %}
+  {{ super() }}
+  <link type="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css">
 {% endblock %}
+
+{% block content %}
+
+
+ <!--Main-->
+<section class="features">
+<div class="container">
+   <div class="row">
+      <div class="col-md-12">
+        <h3>Dodaj izlet:</h3>
+
+        <form action="" method="post" name="dodajizlet" id="dodajizlet" novalidate>
+            {{ form.hidden_tag() }}
+
+          <div class="control-group form-group">
+            <div class="controls">
+                {{ form.naziv.label }}<br>
+                {{ form.naziv(class="form-control",id="ime") }}<br>
+                {% for error in form.naziv.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+              <p class="help-block"></p>
+            </div>
+          </div>
+
+            <div class="control-group form-group">
+            <div class="controls">
+                {{ form.lokacija.label }}<br>
+                {{ form.lokacija(class="form-control",id="lokacija") }}<br>
+                {% for error in form.lokacija.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </div>
+          </div>
+
+            <div class="control-group form-group">
+            <div class="controls">
+                {{ form.datum_polaska.label }}<br>
+                {{ form.datum_polaska(id='datepicker',width="312") }}<br>
+                {% for error in form.datum_polaska.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </div>
+          </div>
+
+          <div class="control-group form-group">
+            <div class="controls">
+                {{ form.datum_povratka.label }}<br>
+                {{ form.datum_povratka(id="input2", width="312") }}<br>
+                {% for error in form.datum_povratka.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+                
+            </div>
+          </div>
+
+            <div class="control-group form-group">
+              <div class="controls">
+                  {{ form.cijena.label }}<br>
+                  {{ form.cijena(class="form-control",id="cijena") }}<br>
+                  {% for error in form.cijena.errors %}
+                  <span style="color: red;">[{{ error }}]</span>
+                  {% endfor %}
+              </div>
+            </div>
+          
+          <div class="control-group form-group">
+            <div class="controls">
+                {{ form.opis.label }}<br>
+                {{ form.opis(rows="10", cols="100", class="form-control", id="message", maxlength="999",style="resize:none") }}<br>
+                {% for error in form.opis.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </div>
+          </div>
+
+          <div id="success"><p>Uspijesno napravljeno!</p></div>
+          <!-- For success/fail messages -->
+          <p>{{ form.submit(class="btn btn-primary", id="sendMessageButton") }}</p>
+        </form>
+
+      </div>
+      </div>
+      </div>
+   </section>
+<!-- Footer -->
+<footer class="py-5 bg-dark ">
+    <div class="container">
+      <p class="m-0 text-center text-white">Sva prava pridržana  &copy; Izleti.hr 2019</p>
+    </div>
+ </footer>
+{% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $('#datepick').datepicker({dateFormat:'dd/mm/yy'});
+    });
+  </script>
+{% endblock %}
+
+
+
+ <!--
+<div class="form-group">
+            <label for="exampleFormControlFile1">Dodaj sliku:</label>
+              <input type="file" class="form-control-file" id="exampleFormControlFile1">
+          </div>
+    -->

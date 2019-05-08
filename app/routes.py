@@ -14,6 +14,7 @@ from app.forms import CreateIzletForm
 import os
 from flask import Flask, render_template, request
 from werkzeug import secure_filename
+from sqlalchemy import distinct
 
 
 
@@ -23,7 +24,8 @@ from werkzeug import secure_filename
 def index():
     broj_usera=User.query.count()
     broj_izleta=Izlet.query.count()
-    return render_template ('index.html',title='Početna',broj_usera=broj_usera, broj_izleta=broj_izleta)
+    broj_jedinstvenih_lokacija=Izlet.query.distinct(Izlet.lokacija).count()
+    return render_template ('index.html',title='Početna',broj_usera=broj_usera, broj_izleta=broj_izleta, broj_jedinstvenih_lokacija=broj_jedinstvenih_lokacija)
 
 @app.route('/login',methods=['GET', 'POST'])
 def login():
@@ -142,7 +144,7 @@ def unfriend(username):
     flash('You are not following {}.'.format(username))
     return redirect(url_for('user', username=username))
 
-@app.route('/prijatelji')
+@app.route('/moji_prijatelji')
 @login_required
 def moji_prijatelji():
     frends=current_user.friends
@@ -171,3 +173,11 @@ def svi_korisnici():
 def svi_izleti():
     izleti=Izlet.query.all()
     return render_template('svi_izleti.html', title='Izleti',izleti=izleti)
+
+@app.route('/moji_izleti')
+@login_required
+def moji_izleti():
+    izleti=Izlet.query.filter(Izlet.creator_id==current_user.id)
+    return render_template('moji_izleti.html', title='Izleti',izleti=izleti)
+
+
