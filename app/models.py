@@ -63,6 +63,11 @@ class User(UserMixin, db.Model):
         prvi_dio=i_befriended.union(own)
         befriended_me=Izlet.query.join(friends,(friends.c.befriended_id==self.id)).filter(friends.c.befriender_id==Izlet.creator_id)
         return prvi_dio.union(befriended_me).order_by(Izlet.timestamp.desc())
+
+    #def moji_prijatelji(self):
+        #prijatelji=User.query.filter(friends.c.befriender_id==self.id)
+        #prijatelji2=User.query.filter(friends.c.befriender_id==self.id)
+        #return prijatelji
     
         
 

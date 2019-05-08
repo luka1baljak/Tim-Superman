@@ -46,4 +46,4 @@ class EditProfileForm(FlaskForm):
     datum_rodjenja=DateField('Datum rođenja',format='%d/%m/%Y')
     broj_telefona=StringField('Broj telefona')
     o_meni=TextAreaField('O meni',validators=[Length(min=0, max=399)])
-    submit = SubmitField('Spremi promjene')
+    submit=SubmitField('Save')

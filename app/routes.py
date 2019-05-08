@@ -2,7 +2,7 @@ from app import app
 from flask import render_template, flash, redirect, url_for,request
 from app.forms import LoginForm
 from flask_login import current_user, login_user
-from app.models import User
+from app.models import User, Izlet
 from flask_login import logout_user, login_required
 from flask import request
 from werkzeug.urls import url_parse
@@ -20,7 +20,9 @@ from werkzeug import secure_filename
 @app.route('/index')
 @login_required
 def index():
-    return render_template ('index.html',title='Početna')
+    broj_usera=User.query.count()
+    broj_izleta=Izlet.query.count()
+    return render_template ('index.html',title='Početna',broj_usera=broj_usera, broj_izleta=broj_izleta)
 
 @app.route('/login',methods=['GET', 'POST'])
 def login():
@@ -67,9 +69,6 @@ def user(username):
     return render_template('user.html', user=user)
 
 
-
-
-
 @app.route('/edit_profile', methods=['GET', 'POST'])
 @login_required
 def edit_profile():
@@ -83,7 +82,7 @@ def edit_profile():
         current_user.o_meni = form.o_meni.data
         db.session.commit()
         flash('Vaše promijene su spremljene.')
-        return redirect(url_for('edit_profile'))
+        return redirect(url_for('index'))
     elif request.method == 'GET':
         form.username.data = current_user.username
         form.ime.data = current_user.ime
@@ -96,6 +95,7 @@ def edit_profile():
 
 
 @app.route('/upload')
+@login_required
 def upload():
    return render_template('upload.html')
     
@@ -107,4 +107,43 @@ def pp():
       f.save(os.path.join(app.config['UPLOAD_FOLDER'], f.filename))
       return 'file uploaded successfully'
 
+
+#Ovaj dio routova je dedicated za frendove itd
+@app.route('/befriend/<username>')
+@login_required
+def befriend(username):
+    user = User.query.filter_by(username=username).first()
+    if user is None:
+        flash('User {} not found.'.format(username))
+        return redirect(url_for('index'))
+    if user == current_user:
+        flash('You cannot follow yourself!')
+        return redirect(url_for('user', username=username))
+    current_user.befriend(user)
+    user.befriend(current_user)
+    db.session.commit()
+    flash('You are friends with {}!'.format(username))
+    return redirect(url_for('user', username=username))
+
+@app.route('/unfriend/<username>')
+@login_required
+def unfriend(username):
+    user = User.query.filter_by(username=username).first()
+    if user is None:
+        flash('User {} not found.'.format(username))
+        return redirect(url_for('index'))
+    if user == current_user:
+        flash('You cannot unfollow yourself!')
+        return redirect(url_for('user', username=username))
+    current_user.unfriend(user)
+    user.unfriend(current_user)
+    db.session.commit()
+    flash('You are not following {}.'.format(username))
+    return redirect(url_for('user', username=username))
+
+@app.route('/prijatelji')
+@login_required
+def moji_prijatelji():
+    frends=current_user.friends
+    return render_template('friends.html', title='Home Page',frends=frends)
 

@@ -2,7 +2,7 @@
 
 {% block content %}
     <h1>Edit Profile</h1>
- 
+ <form action="" method="post" novalidate>
         {{ form.hidden_tag() }}
         <p>
             {{ form.username.label }}<br>
@@ -51,7 +51,17 @@
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
-        
         <p>{{ form.submit() }}</p>
+        
     </form>
+
+            {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <ul class=flashes>
+            {% for message in messages %}
+              <li>{{ message }}</li>
+            {% endfor %}
+            </ul>
+          {% endif %}
+        {% endwith %}
 {% endblock %}
