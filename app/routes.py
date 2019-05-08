@@ -10,6 +10,7 @@ from werkzeug.utils import secure_filename
 from app import db
 from app.forms import RegistrationForm
 from app.forms import EditProfileForm
+from app.forms import CreateIzletForm
 import os
 from flask import Flask, render_template, request
 from werkzeug import secure_filename
@@ -146,4 +147,16 @@ def unfriend(username):
 def moji_prijatelji():
     frends=current_user.friends
     return render_template('friends.html', title='Home Page',frends=frends)
+
+@app.route('/dodajizlet', methods=['GET', 'POST'])
+@login_required
+def dodajizlet():
+    form = CreateIzletForm()
+    if form.validate_on_submit():
+        izlet=Izlet(naziv=form.naziv.data, lokacija=form.lokacija.data, opis=form.opis.data, datum_polaska=form.datum_polaska.data, datum_povratka=form.datum_povratka.data, cijena=form.cijena.data, creator_id=current_user.id)
+        db.session.add(izlet)
+        db.session.commit()
+        flash('Kreirali ste novi izlet.')
+        return redirect(url_for('index'))    
+    return render_template('dodajizlet.html', title='Dodaj izlet',form=form)
 

@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Kreiraj izlet</h1>
+    <form action="" method="post" novalidate>
+ 
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.naziv.label }}<br>
+            {{ form.naziv(size=32) }}<br>
+            {% for error in form.naziv.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+
+        <p>
+            {{ form.lokacija.label }}<br>
+            {{ form.lokacija(size=32) }}<br>
+            {% for error in form.lokacija.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+
+        <p>
+            {{ form.opis.label }}<br>
+            {{ form.opis(size=32) }}<br>
+            {% for error in form.opis.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+
+        <p>
+            {{ form.datum_polaska.label }}<br>
+            {{ form.datum_polaska(size=32) }}<br>
+            {% for error in form.datum_polaska.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+
+        <p>
+            {{ form.datum_povratka.label }}<br>
+            {{ form.datum_povratka(size=32) }}<br>
+            {% for error in form.datum_povratka.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+
+        <p>
+            {{ form.cijena.label }}<br>
+            {{ form.cijena(size=32) }}<br>
+            {% for error in form.cijena.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        
+        <p>{{ form.submit() }}</p>
+    </form>
+{% endblock %}

@@ -88,7 +88,6 @@ class Izlet(db.Model):
         return '<Izlet {}>'.format(self.naziv)
 
 
-
 @login.user_loader
 def load_user(id):
     return User.query.get(int(id))

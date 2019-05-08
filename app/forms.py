@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, DateField, FileField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, DateField, FileField, DecimalField
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
 from app.models import User
 from flask_wtf.file import FileField, FileRequired, FileAllowed
@@ -47,3 +47,12 @@ class EditProfileForm(FlaskForm):
     broj_telefona=StringField('Broj telefona')
     o_meni=TextAreaField('O meni',validators=[Length(min=0, max=399)])
     submit=SubmitField('Save')
+
+class CreateIzletForm(FlaskForm):
+    naziv = StringField('Naziv izleta', validators=[DataRequired()])
+    lokacija = StringField('Destinacija', validators=[DataRequired()])
+    opis=TextAreaField('Opis izleta', validators=[DataRequired(),Length(min=0, max=500)])
+    datum_polaska=DateField('Datum polaska', format='%d/%m/%Y')
+    datum_povratka=DateField('Datum povratka', format='%d/%m/%Y')
+    cijena=DecimalField('cijena', places=2)
+    submit=SubmitField('Kreiraj izlet')
