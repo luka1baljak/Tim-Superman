@@ -187,26 +187,24 @@ def moji_prijatelji():
 @login_required
 def izlet(id):
     izlet = Izlet.query.filter_by(id=id).first_or_404()
-    
+
     return render_template('izlet.html', izlet=izlet)
 
 
 #Upload i pp sluze za uploadanje slika ua izlete
-@app.route('/upload_izlet_picture')
+'''@app.route('/upload_izlet_picture')
 @login_required
 def upload_izlet_picture():
    return render_template('upload_izlet_pic.html')
     
-
-@app.route('/slika_izleta', methods = ['GET', 'POST'])
-def slika_izleta():
-    izlet=Izlet.query.filter(current_user.id==Izlet.creator_id)
+'''
+@app.route('/slika_izleta/<id>', methods = ['GET', 'POST'])
+def slika_izleta(id):
+    izlet = Izlet.query.filter_by(id=id).first_or_404()
     if request.method == 'POST':
         f = request.files['slikai']
         izlet.slika_izleta=f.filename
-        #current_user.profilna_slika=f.filename
         db.session.commit()
         filename=secure_filename(f.filename)
         f.save(os.path.join(app.config['UPLOAD_FOLDER2'], filename))
-        return f.filename
-        #return redirect(url_for('dodajizlet'))
+        return redirect(url_for('izlet', id=id)) 

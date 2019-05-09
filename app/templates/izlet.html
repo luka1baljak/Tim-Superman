@@ -3,6 +3,11 @@
 {% block content %}
     <h1>Izlet: {{ izlet.naziv }}</h1>
     <hr>
+    <h4>Promijeni sliku izleta</h4>
+          <form action = "{{url_for('slika_izleta', id=izlet.id)}}" method = "POST" enctype = "multipart/form-data">
+            <input type = "file" name = "slikai" />
+            <input type = "submit"/>
+          </form>
     {% if izlet.slika_izleta %}
     <img src="{{ url_for('static', filename='img2/' + izlet.slika_izleta) }}" />
     

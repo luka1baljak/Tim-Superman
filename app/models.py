@@ -88,6 +88,19 @@ class Izlet(db.Model):
     def __repr__(self):
         return '<Izlet {}>'.format(self.naziv)
 
+    '''def postani_sudionik(self, user):
+        if not self.is_following(user):
+            self.followed.append(user)
+
+    def prestani_sudionik(self, user):
+        if self.is_following(user):
+            self.followed.remove(user)
+
+    def je_sudionik(self, user):
+        return user.followed.filter(
+            followers.c.followed_id == user.id).count() > 0'''
+
+
 
 
 @login.user_loader
