@@ -12,7 +12,18 @@
 		
 		<div class="col-sm-4">
 			<div class="korisnik">
-			<a href="url_for">  <img src="static/pictures/korisnik.jpg" class="img-fluid" > </a>
+			<a href="{{ url_for('user', username=korisnik.username) }}"> 
+				{% if korisnik.profilna_slika %}
+
+    			<img src="{{ url_for('static', filename='img/' + korisnik.profilna_slika) }}" class="img-fluid" >
+    
+    			{% else %}
+
+    			<img src="{{ url_for('static', filename='img/korisnik.jpg') }}" class="img-fluid">
+
+    			{% endif %}
+
+			</a>
 			  <h4>{{korisnik.ime}} {{korisnik.prezime}}</h4>
 			</div>
 			</div>

@@ -13,7 +13,18 @@
 		
 			<div class="col-sm-4">
 			<div class="korisnik">
-			<a href="url_for('user')"> <img src="static/pictures/korisnik.jpg" class="img-fluid" > </a>
+			<a href="{{ url_for('user', username=f.username) }}"> 
+				{% if f.profilna_slika %}
+
+    			<img src="{{ url_for('static', filename='img/' + f.profilna_slika) }}" class="img-fluid" >
+    
+    			{% else %}
+
+    			<img src="{{ url_for('static', filename='img/f.jpg') }}" class="img-fluid">
+
+    			{% endif %}
+
+			</a>
 			  <h4>{{f.ime}} {{f.prezime}}</h4>
 			</div>
 			</div>

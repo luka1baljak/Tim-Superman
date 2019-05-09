@@ -27,7 +27,7 @@ class User(UserMixin, db.Model):
     datum_rodjenja=db.Column(db.Date, nullable=True)
     broj_telefona=db.Column(db.String(20), nullable=True)
     o_meni=db.Column(db.String(400), nullable=True)
-    profilna_slika=db.Column(db.String(300), nullable=True)
+    profilna_slika=db.Column(db.String(300), default='korisnik.jpg')
     izleti = db.relationship('Izlet', backref='creator', lazy='dynamic')
     befriended=db.relationship(
         'User',secondary=friends,

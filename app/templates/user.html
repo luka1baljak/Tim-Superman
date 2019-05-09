@@ -3,8 +3,12 @@
 {% block content %}
     <h1>User: {{ user.username }}</h1>
     <hr>
+    {% if user.profilna_slika %}
     <img src="{{ url_for('static', filename='img/' + user.profilna_slika) }}" />
     
+    {% else %}
+    <img src="{{ url_for('static', filename='img/korisnik.jpg') }}" />
+    {% endif %}
     <p>{{ user.friends.count() }} prijatelja, {{ user.izleti.count() }} izleta.</p>
     {% if user == current_user %}
     <p><a href="{{ url_for('edit_profile') }}">Edit your profile</a></p>
