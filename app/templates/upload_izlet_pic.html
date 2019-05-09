@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+    	<h4>Dodaj sliku izleta</h4>
+          <form action = "{{url_for('slika_izleta')}}" method = "POST" enctype = "multipart/form-data">
+            <input type = "file" name = "slikai" />
+            <input type = "submit"/>
+          </form>
+{% endblock %}
+

@@ -52,17 +52,9 @@
   </div>
 </nav>
 
-    <h1>User: {{ user.username }}</h1>
+    <h1>Izlet: {{ izlet.naziv }}</h1>
     <hr>
-    <img src="{{url_for('static',filename='user.profilna_slika')}}">
-    <p>{{ user.friends.count() }} prijatelja, {{ user.izleti.count() }} izleta.</p>
-    {% if user == current_user %}
-    <p><a href="{{ url_for('edit_profile') }}">Edit your profile</a></p>
-    {% elif not current_user.is_friends(user) %}
-    <p><a href="{{ url_for('befriend', username=user.username) }}">Befriend</a></p>
-    {% else %}
-    <p><a href="{{ url_for('unfriend', username=user.username) }}">Unfriend</a></p>
-    {% endif %}
+    
 
 
 </body>

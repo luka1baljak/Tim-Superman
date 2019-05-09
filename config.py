@@ -7,3 +7,4 @@ class Config(object):
         'sqlite:///' + os.path.join(basedir, 'app.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     UPLOAD_FOLDER = os.path.join(basedir + '/app/static/img/')
+    UPLOAD_FOLDER2 = os.path.join(basedir + '/app/static/img2/')

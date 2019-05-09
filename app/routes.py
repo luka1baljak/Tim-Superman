@@ -96,7 +96,7 @@ def edit_profile():
     return render_template('edit_profile.html', title='Edit Profile',form=form)
 
 
-#Upload i pp sluze za uploadanje slika
+#Upload i pp sluze za uploadanje slika ua usere
 @app.route('/upload')
 @login_required
 def upload():
@@ -146,12 +146,6 @@ def unfriend(username):
     flash('You are not following {}.'.format(username))
     return redirect(url_for('user', username=username))
 
-@app.route('/moji_prijatelji')
-@login_required
-def moji_prijatelji():
-    frends=current_user.friends
-    return render_template('friends.html', title='Home Page',frends=frends)
-
 @app.route('/dodajizlet', methods=['GET', 'POST'])
 @login_required
 def dodajizlet():
@@ -163,7 +157,7 @@ def dodajizlet():
         flash('Kreirali ste novi izlet.')
         return redirect(url_for('index'))    
     return render_template('dodajizlet.html', title='Dodaj izlet',form=form)
-
+#Svi korisnici i izleti te moji prijatelji i moji izleti
 @app.route('/svi_korisnici')
 @login_required
 def svi_korisnici():
@@ -182,6 +176,12 @@ def moji_izleti():
     izleti=Izlet.query.filter(Izlet.creator_id==current_user.id)
     return render_template('moji_izleti.html', title='Izleti',izleti=izleti)
 
+@app.route('/moji_prijatelji')
+@login_required
+def moji_prijatelji():
+    frends=current_user.friends
+    return render_template('friends.html', title='Home Page',frends=frends)
+
 #Izleti
 @app.route('/izlet/<id>')
 @login_required
@@ -189,3 +189,24 @@ def izlet(id):
     izlet = Izlet.query.filter_by(id=id).first_or_404()
     
     return render_template('izlet.html', izlet=izlet)
+
+
+#Upload i pp sluze za uploadanje slika ua izlete
+@app.route('/upload_izlet_picture')
+@login_required
+def upload_izlet_picture():
+   return render_template('upload_izlet_pic.html')
+    
+
+@app.route('/slika_izleta', methods = ['GET', 'POST'])
+def slika_izleta():
+    izlet=Izlet.query.filter(current_user.id==Izlet.creator_id)
+    if request.method == 'POST':
+        f = request.files['slikai']
+        izlet.slika_izleta=f.filename
+        #current_user.profilna_slika=f.filename
+        db.session.commit()
+        filename=secure_filename(f.filename)
+        f.save(os.path.join(app.config['UPLOAD_FOLDER2'], filename))
+        return f.filename
+        #return redirect(url_for('dodajizlet'))
