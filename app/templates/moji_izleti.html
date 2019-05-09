@@ -12,7 +12,19 @@
 		<div class="col-md-4">
 			<div class="feature-box">
 			<div class="feature-img">
-			<a href="izlet1.html"> <img src="slike/rovinj.jpg"> </a>
+			<a href="{{ url_for('izlet', id=i.id) }}"> 
+
+				{% if i.slika_izleta %}
+
+    			<img src="{{ url_for('static', filename='img2/' + i.slika_izleta) }}">
+    
+    			{% else %}
+
+    			<img src="{{ url_for('static', filename='img2/banne.jpg') }}" >
+
+    			{% endif %}
+
+			</a>
 			<div class="price">
 			<p style="font-size:12.5px;">{{i.cijena}}</p>
 			</div>

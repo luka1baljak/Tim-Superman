@@ -1,62 +1,16 @@
-<!DOCTYPE html >
-<html>
-<head>
-  <title>Izleti app</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+{% extends "base.html" %}
 
-  <link rel = "stylesheet" type="text/css" href="{{url_for('static',filename='style_index.css')}}">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-</head>
-<body>
-<!-- Navigacija -->
-  <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #FF8C00;">
-  <a class="navbar-brand" href="#"><img src="logo.png"></a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="{{url_for('index')}}">Početna <span class="sr-only">(current)</span></a>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Izleti
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="{{url_for('svi_izleti')}}">Popis izleta</a>
-          <a class="dropdown-item" href="{{url_for('dodajizlet')}}">Dodaj izlet</a>
-        </div>
-        <li class="nav-item">
-        <a class="nav-link" href="{{url_for('svi_korisnici')}}">Korisnici <span class="sr-only">(current)</span></a> 
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Poruke <span class="sr-only">(current)</span></a> 
-      </li>
-        <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Moj profil
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="{{ url_for('user', username=current_user.username) }}">{{ current_user.username }}</a>
-          <a class="dropdown-item" href="{{url_for('edit_profile')}}">Uredi profil</a>
-          <a class="dropdown-item" href="{{url_for('moji_prijatelji')}}">Moji Prijatelji</a>
-          <a class="dropdown-item" href="{{url_for('moji_izleti')}}">Moji Izleti</a>
-          <a class="dropdown-item" href="{{url_for('logout')}}">Odjava</a>
-        </div>
-        
-  </div>
-</nav>
-
+{% block content %}
     <h1>Izlet: {{ izlet.naziv }}</h1>
     <hr>
+    {% if izlet.slika_izleta %}
+    <img src="{{ url_for('static', filename='img2/' + izlet.slika_izleta) }}" />
     
+    {% else %}
 
+    <img src="{{ url_for('static', filename='img2/banne.jpg') }}" />
+    {% endif %}
 
-</body>
-</html>
+	{{izlet.slika_izleta}}
+{% endblock %}
 
