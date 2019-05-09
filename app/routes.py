@@ -96,20 +96,22 @@ def edit_profile():
     return render_template('edit_profile.html', title='Edit Profile',form=form)
 
 
-
+#Upload i pp sluze za uploadanje slika
 @app.route('/upload')
 @login_required
 def upload():
    return render_template('upload.html')
     
+
 @app.route('/pp', methods = ['GET', 'POST'])
 def pp():
-   if request.method == 'POST':
-      f = request.files['file']
-      f.save(secure_filename(f.filename))
-      f.save(os.path.join(app.config['UPLOAD_FOLDER'], f.filename))
-      return 'file uploaded successfully'
-
+    if request.method == 'POST':
+        f = request.files['file']
+        current_user.profilna_slika=f.filename
+        db.session.commit()
+        filename=secure_filename(f.filename)
+        f.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        return redirect(url_for('edit_profile'))
 
 #Ovaj dio routova je dedicated za frendove itd
 @app.route('/befriend/<username>')
@@ -180,4 +182,10 @@ def moji_izleti():
     izleti=Izlet.query.filter(Izlet.creator_id==current_user.id)
     return render_template('moji_izleti.html', title='Izleti',izleti=izleti)
 
-
+#Izleti
+@app.route('/izlet/<id>')
+@login_required
+def izlet(id):
+    izlet = Izlet.query.filter_by(id=id).first_or_404()
+    
+    return render_template('izlet.html', izlet=izlet)

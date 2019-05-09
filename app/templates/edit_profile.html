@@ -6,6 +6,11 @@
    <div class="row">
       <div class="col-md-12">
         <h3>Uredi profil</h3>
+        <form action = "{{url_for('pp')}}" method = "POST" 
+           enctype = "multipart/form-data">
+           <input type = "file" name = "file" />
+           <input type = "submit"/>
+        </form>
         <form action="" method="post name="dodajizlet" id="dodajizlet" novalidate>
           <div class="control-group form-group">
             <div class="controls">

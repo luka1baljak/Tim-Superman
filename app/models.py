@@ -81,6 +81,7 @@ class Izlet(db.Model):
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     opis=db.Column(db.String(500), nullable=True)
     creator_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    slika_izleta=db.Column(db.String(300), default='banne.jpg')
 
     sudionici=db.relationship("User", secondary=tablica_povezivanja)
 

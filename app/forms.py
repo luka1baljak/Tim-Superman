@@ -56,3 +56,7 @@ class CreateIzletForm(FlaskForm):
     datum_povratka=DateField('Datum povratka', format='%d/%m/%Y')
     cijena=DecimalField('cijena', places=2)
     submit=SubmitField('Kreiraj izlet')
+
+class ProfilePictureForm(FlaskForm):
+    url=FileField('url')
+    submit=SubmitField('Upload picture')
