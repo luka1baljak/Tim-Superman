@@ -1,36 +1,67 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Izlet: {{ izlet.naziv }}</h1>
-    <hr>
-    <h4>Promijeni sliku izleta</h4>
-          <form action = "{{url_for('slika_izleta', id=izlet.id)}}" method = "POST" enctype = "multipart/form-data">
-            <input type = "file" name = "slikai" />
-            <input type = "submit"/>
-          </form>
-    {% if izlet.slika_izleta %}
-    <img src="{{ url_for('static', filename='img2/' + izlet.slika_izleta) }}" />
+<!--Main-->
+<section class="features">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+            <ul class="list-group">
+                <li class="list-group-item text-muted" contenteditable="false"><h3>{{izlet.naziv}}</h3>
+                    <h4>Lokacija:{{izlet.lokacija}}</h4> <i class="fas fa-undo" onClick="location.href='{{url_for('index')}}'"></i></li>
+                <li class="list-group-item text-left"> 
+                    
+                        {% if izlet.slika_izleta %}
+                        <img style="height:100%;width:100%" src="{{ url_for('static', filename='img2/' + izlet.slika_izleta) }}" />
+                        
+                        {% else %}
+
+                        <img style="height:100%;width:100%" src="{{ url_for('static', filename='img2/banne.jpg') }}" />
+                        {% endif %}
+                </li>
+
+                <li class="list-group-item text-left"><span class="pull-left"><strong class="">Promijeni sliku izleta: </strong></span>
+                {% if izlet.creator_id == current_user.id %}
+                <!--<p>{{current_user.username}}, ti si vlasnik izleta.</p>-->
+                  <form action = "{{url_for('slika_izleta', id=izlet.id)}}" method = "POST" enctype = "multipart/form-data">
+                    <input type = "file" name = "slikai" />
+                    <input type = "submit"/>
+                  </form>
+                {% elif not izlet.creator_id == current_user.id %}
+
+                    {% if izlet.je_sudionik(current_user)%}
+                    <p><a class="btn btn-primary" href="{{ url_for('prestani_sudionik', id=izlet.id) }}">Odjavi se sa izleta</a></p>
+                    {% else %}
+                    <p><a class="btn btn-primary" href="{{ url_for('postani_sudionik', id=izlet.id) }}">Prijavi se za izlet</a></p>
+                    {% endif %}
     
-    {% else %}
+                {% endif %}
+                </li>
 
-    <img src="{{ url_for('static', filename='img2/banne.jpg') }}" />
-    {% endif %}
-
-	{{izlet.slika_izleta}}
-
-    {% if izlet.creator_id == current_user.id %}
-    <!--<p><a href="{{ url_for('edit_profile') }}">Edit your profile</a></p>--><p>{{current_user.username}}, ti si vlasnik izleta.
-    </p>
-    {% elif not izlet.creator_id == current_user.id %}
-
-        {% if izlet.je_sudionik(current_user)%}
-        <p><a href="{{ url_for('prestani_sudionik', id=izlet.id) }}">Odjavi se sa izleta</a></p>
-        {% else %}
-        <p><a href="{{ url_for('postani_sudionik', id=izlet.id) }}">Prijavi se za izlet</a></p>
-        {% endif %}
-    
-    {% endif %}
-    
-
+                <li class="list-group-item text-left"><span class="pull-left"><strong class="">Cijena: </strong></span> <h4>{{izlet.cijena}}<h4> 
+                    </li>
+                <li class="list-group-item text-left"><span class="pull-left"><strong class="">Opis Izleta: </strong></span>
+                {{izlet.opis}}</li>
+                <li class="list-group-item text-left"><span class="pull-left"><strong class="">Datum i vrijeme polaska: </strong></span>{{izlet.datum_polaska}}</li>
+                <li class="list-group-item text-left"><span class="pull-left"><strong class="">Datum i vrijeme povratka: </strong></span>{{izlet.datum_povratka}}</li>
+                <li class="list-group-item text-left"><span class="pull-left"><strong class="">Prijavljeni korisnici: </strong></span>
+                    {% for sudionik in izlet.sudionici %}
+                    <a  href="profilkorisnika.html"> {{sudionik.ime}} {{sudionik.prezime}} </a>, 
+                    {% endfor %}
+                 <!--   <a  href="profilkorisnika.html"> Ivo Ivic </a>, 
+                    <a  href="profilkorisnika.html"> Ana Anic </a>, 
+                    <a  href="profilkorisnika.html"> Gogo Gogic </a> -->
+                </li>
+            </ul>
+       </div>
+       </div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="py-5 bg-dark ">
+    <div class="container">
+      <p class="m-0 text-center text-white">Sva prava pridržana  &copy; Izleti.hr 2019</p>
+    </div>
+ </footer>
 {% endblock %}
 

@@ -1,23 +1,134 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>User: {{ user.username }}</h1>
-    <hr>
-    {% if user.profilna_slika %}
-    <img src="{{ url_for('static', filename='img/' + user.profilna_slika) }}" />
-    
-    {% else %}
-    <img src="{{ url_for('static', filename='img/korisnik.jpg') }}" />
-    {% endif %}
-    <p>{{ user.friends.count() }} prijatelja, {{ user.izleti.count() }} izleta.</p>
+    <!--Main-->
+<div class="container emp-profile">
+            <form method="post">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="profile-img">
+                            {% if user.profilna_slika %}
+                                <img style="height:100%;width:100%" src="{{ url_for('static', filename='img/' + user.profilna_slika) }}" />
+                                
+                                {% else %}
 
-    {% if user == current_user %}
-    <p><a href="{{ url_for('edit_profile') }}">Edit your profile</a></p>
-    {% elif not current_user.is_friends(user) %}
-    <p><a href="{{ url_for('befriend', username=user.username) }}">Befriend</a></p>
-    {% else %}
-    <p><a href="{{ url_for('unfriend', username=user.username) }}">Unfriend</a></p>
-    {% endif %}
-    {{user.profilna_slika}}
-    
+                                <img  style="height:100%;width:100%" src="{{ url_for('static', filename='img/korisnik.jpg') }}" />
+                                {% endif %}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="profile-head">
+                                    <h5>
+                                        {{user.ime}} {{user.prezime}}
+                                    </h5>
+                                    <h6>
+                                        Korisnik
+                                    </h6>
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Profil</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Popis izleta</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+
+                        {% if user == current_user %}
+                        <p><a class="btn btn-primary" href="{{ url_for('edit_profile') }}">Uredi profil</a></p>
+                            {% elif not current_user.is_friends(user) %}
+                        <p><a class="btn btn-primary" href="{{ url_for('befriend', username=user.username) }}">Dodaj za prijatelja</a></p>
+                            {% else %}
+                        <p><a  class="btn btn-primary" href="{{ url_for('unfriend', username=user.username) }}">Prekini prijateljstvo</a></p>
+                            {% endif %}
+                       
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="tab-content profile-tab" id="myTabContent">
+                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Korisničko ime</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>{{user.username}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Ime</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>{{user.ime}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Prezime</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>{{user.prezime}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Email</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>{{user.email}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Datum rođenja</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>{{user.datum_rodjenja}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Broj telefona</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>{{user.broj_telefona}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>O meni</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p> {{user.o_meni}}</p>
+                                            </div>
+                                        </div>
+                                        
+                            </div>
+                            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                {%for i in izleti%}
+                                                <a href="{{ url_for('izlet', id=i.id) }}"><p>{{i.naziv}}</p></a>
+                                                {%endfor%}
+                                            </div>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>           
+        </div>
+<!-- Footer -->
+<footer class="py-5 bg-dark fixed navbar-padded">
+    <div class="container">
+      <p class="m-0 text-center text-white">Sva prava pridržana  © Izleti.hr 2019</p>
+    </div>
+ </footer>
+
 {% endblock %}

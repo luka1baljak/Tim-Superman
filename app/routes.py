@@ -26,9 +26,9 @@ def index():
     broj_izleta=Izlet.query.count()
     #broj_jedinstvenih_lokacija=Izlet.query.distinct(Izlet.lokacija).count() Izlet.query.order_by(Izlet.timestamp.desc())
     broj_jedinstvenih_lokacija=Izlet.query.distinct(Izlet.lokacija).group_by(Izlet.lokacija).count()
-
-   # popular= db.query(User).join(User.tags).filter(Izlet.id==1).count()
-    return render_template ('index.html',title='Početna',broj_usera=broj_usera, broj_izleta=broj_izleta, broj_jedinstvenih_lokacija=broj_jedinstvenih_lokacija)
+    #db.s.query(core.Paper.title, func.count(core.Author.id)).join(core.Paper.authors).group_by(core.Paper.id).all()
+    popular= db.session.query(Izlet, func.count(User.id)).join(Izlet.sudionici).group_by(Izlet.id).limit(3).all()
+    return render_template ('index.html',title='Početna',broj_usera=broj_usera, broj_izleta=broj_izleta, broj_jedinstvenih_lokacija=broj_jedinstvenih_lokacija,popular=popular)
 
 @app.route('/login',methods=['GET', 'POST'])
 def login():
@@ -71,8 +71,8 @@ def register():
 @login_required
 def user(username):
     user = User.query.filter_by(username=username).first_or_404()
-    
-    return render_template('user.html', user=user)
+    izleti=Izlet.query.filter(Izlet.creator_id==user.id)
+    return render_template('user.html', user=user, izleti=izleti)
 
 
 @app.route('/edit_profile', methods=['GET', 'POST'])

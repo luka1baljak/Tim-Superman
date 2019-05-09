@@ -56,15 +56,49 @@
 </div>
 </div>
 <!--Main-->
+<h2>Najpopularniji izleti</h2>
 <div class="main">
-        <hr>
-        <h1>Hi, {{ current_user.username }}!</h1>
-        <br>
-        <br>
+      <div class="row">
+
+      {% for p in popular %}
+    
+    <div class="col-md-4">
+      <div class="feature-box">
+      <div class="feature-img">
+      <a href="{{ url_for('izlet', id=p.id) }}"> 
+
+        {% if p[0].slika_izleta %}
+
+          <img src="{{ url_for('static', filename='img2/' + p[0].slika_izleta) }}">
+    
+          {% else %}
+
+          <img src="{{ url_for('static', filename='img2/banne.jpg') }}" >
+
+          {% endif %}
+
+      </a>
+      <div class="price">
+      <p style="font-size:12.5px;">{{p[0].cijena}}</p>
       </div>
-  {# {% for p in popular %}
-  {{p.naziv}}
-  {% endfor %} #}
+      <div class="rating">
+        <i class="fa fa-star"></i>
+        <i class="fa fa-star"></i>
+        <i class="fa fa-star"></i>
+        <i class="fa fa-star"></i>
+        <i class="fa fa-star"></i>
+      </div>
+      </div>
+      <div class="feature-details">
+        <h4>{{p[0].lokacija}}</h4>
+        <p>{{p[0].opis}}</p>
+      </div>
+      
+      </div>
+    </div>
+    
+    {% endfor %}
+  </div>
 <!-- Footer -->
 <footer class="py-5 bg-dark ">
     <div class="container">
