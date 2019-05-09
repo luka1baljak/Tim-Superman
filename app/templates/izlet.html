@@ -17,5 +17,20 @@
     {% endif %}
 
 	{{izlet.slika_izleta}}
+
+    {% if izlet.creator_id == current_user.id %}
+    <!--<p><a href="{{ url_for('edit_profile') }}">Edit your profile</a></p>--><p>{{current_user.username}}, ti si vlasnik izleta.
+    </p>
+    {% elif not izlet.creator_id == current_user.id %}
+
+        {% if izlet.je_sudionik(current_user)%}
+        <p><a href="{{ url_for('prestani_sudionik', id=izlet.id) }}">Odjavi se sa izleta</a></p>
+        {% else %}
+        <p><a href="{{ url_for('postani_sudionik', id=izlet.id) }}">Prijavi se za izlet</a></p>
+        {% endif %}
+    
+    {% endif %}
+    
+
 {% endblock %}
 

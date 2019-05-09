@@ -7,7 +7,7 @@ import os
 from flask_uploads import UploadSet, configure_uploads, IMAGES, patch_request_class
 from flask import Flask, request, redirect, url_for
 from werkzeug.utils import secure_filename
-
+from flask_bootstrap import Bootstrap
 
 
 app = Flask(__name__)
@@ -16,6 +16,8 @@ db=SQLAlchemy(app)
 migrate=Migrate(app,db)
 login=LoginManager(app)
 login.login_view='login'
+
+Bootstrap(app)
 
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
 

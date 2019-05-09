@@ -15,7 +15,7 @@ import os
 from flask import Flask, render_template, request
 from werkzeug import secure_filename
 from sqlalchemy import distinct
-
+from sqlalchemy import func
 
 
 @app.route('/')
@@ -24,7 +24,8 @@ from sqlalchemy import distinct
 def index():
     broj_usera=User.query.count()
     broj_izleta=Izlet.query.count()
-    broj_jedinstvenih_lokacija=Izlet.query.distinct(Izlet.lokacija).count()
+    #broj_jedinstvenih_lokacija=Izlet.query.distinct(Izlet.lokacija).count()
+    broj_jedinstvenih_lokacija=Izlet.query.distinct(Izlet.lokacija).group_by(Izlet.lokacija).count()
     return render_template ('index.html',title='Početna',broj_usera=broj_usera, broj_izleta=broj_izleta, broj_jedinstvenih_lokacija=broj_jedinstvenih_lokacija)
 
 @app.route('/login',methods=['GET', 'POST'])
@@ -208,3 +209,35 @@ def slika_izleta(id):
         filename=secure_filename(f.filename)
         f.save(os.path.join(app.config['UPLOAD_FOLDER2'], filename))
         return redirect(url_for('izlet', id=id)) 
+
+
+#Ovaj dio routova je dedicated za sudionike izleta itd
+@app.route('/postani_sudionik/<id>')
+@login_required
+def postani_sudionik(id):
+    izlet = Izlet.query.filter_by(id=id).first()
+    if izlet is None:
+        flash('Izlet {} not found.'.format(izlet.naziv))
+        return redirect(url_for('index'))
+    if izlet.creator_id == current_user.id:
+        flash('To je tvoj izlet')
+        return redirect(url_for('izlet', id=id))
+    izlet.postani_sudionik(current_user)
+    db.session.commit()
+    flash('Ti si sada sudionik {}!'.format(izlet.naziv))
+    return redirect(url_for('izlet', id=id))
+
+@app.route('/prestani_sudionik/<id>')
+@login_required
+def prestani_sudionik(id):
+    izlet = Izlet.query.filter_by(id=id).first()
+    if izlet is None:
+        flash('Izlet {} not found.'.format(izlet.naziv))
+        return redirect(url_for('index'))
+    if izlet.creator_id == current_user.id:
+        flash('Ne možeš se odjaviti sa svoga izleta')
+        return redirect(url_for('izlet', id=id))
+    izlet.prestani_sudionik(current_user)
+    db.session.commit()
+    flash('Odjavio si se sa {}.'.format(izlet.naziv))
+    return redirect(url_for('izlet', id=id))

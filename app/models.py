@@ -83,22 +83,22 @@ class Izlet(db.Model):
     creator_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     slika_izleta=db.Column(db.String(300), default='banne.jpg')
 
-    sudionici=db.relationship("User", secondary=tablica_povezivanja)
+    sudionici=db.relationship("User", secondary=tablica_povezivanja, lazy='dynamic')
 
     def __repr__(self):
         return '<Izlet {}>'.format(self.naziv)
 
-    '''def postani_sudionik(self, user):
-        if not self.is_following(user):
-            self.followed.append(user)
+    def postani_sudionik(self, user):
+        if not self.je_sudionik(user):
+            self.sudionici.append(user)
 
     def prestani_sudionik(self, user):
-        if self.is_following(user):
-            self.followed.remove(user)
+        if self.je_sudionik(user):
+            self.sudionici.remove(user)
 
     def je_sudionik(self, user):
-        return user.followed.filter(
-            followers.c.followed_id == user.id).count() > 0'''
+        return self.sudionici.filter(
+            tablica_povezivanja.c.user_id == user.id).count() > 0
 
 
 
