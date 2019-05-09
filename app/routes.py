@@ -24,8 +24,10 @@ from sqlalchemy import func
 def index():
     broj_usera=User.query.count()
     broj_izleta=Izlet.query.count()
-    #broj_jedinstvenih_lokacija=Izlet.query.distinct(Izlet.lokacija).count()
+    #broj_jedinstvenih_lokacija=Izlet.query.distinct(Izlet.lokacija).count() Izlet.query.order_by(Izlet.timestamp.desc())
     broj_jedinstvenih_lokacija=Izlet.query.distinct(Izlet.lokacija).group_by(Izlet.lokacija).count()
+
+   # popular= db.query(User).join(User.tags).filter(Izlet.id==1).count()
     return render_template ('index.html',title='Početna',broj_usera=broj_usera, broj_izleta=broj_izleta, broj_jedinstvenih_lokacija=broj_jedinstvenih_lokacija)
 
 @app.route('/login',methods=['GET', 'POST'])
