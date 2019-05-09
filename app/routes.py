@@ -107,6 +107,7 @@ def upload():
     
 
 @app.route('/pp', methods = ['GET', 'POST'])
+@login_required
 def pp():
     if request.method == 'POST':
         f = request.files['file']
@@ -202,6 +203,7 @@ def upload_izlet_picture():
     
 '''
 @app.route('/slika_izleta/<id>', methods = ['GET', 'POST'])
+@login_required
 def slika_izleta(id):
     izlet = Izlet.query.filter_by(id=id).first_or_404()
     if request.method == 'POST':

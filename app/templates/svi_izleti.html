@@ -29,11 +29,13 @@
 			<p style="font-size:12.5px;">{{i.cijena}}</p>
 			</div>
 			<div class="rating">
-				<i class="fa fa-star"></i>
-				<i class="fa fa-star"></i>
-				<i class="fa fa-star"></i>
-				<i class="fa fa-star"></i>
-				<i class="fa fa-star"></i>
+				{% if i.sudionici %}
+				{% for j in i.sudionici%}
+				<i class="fas fa-user"></i>
+				{%endfor%}
+				{%else%}
+
+				{%endif%}
 			</div>
 			</div>
 			<div class="feature-details">
