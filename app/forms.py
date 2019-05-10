@@ -52,8 +52,8 @@ class CreateIzletForm(FlaskForm):
     naziv = StringField('Naziv izleta', validators=[DataRequired()])
     lokacija = StringField('Destinacija', validators=[DataRequired()])
     opis=TextAreaField('Opis izleta', validators=[DataRequired(),Length(min=0, max=500)])
-    datum_polaska=DateTimeField('Datum i vrijeme polaska',format='%Y-%m-%d %H:%M:%S')
-    datum_povratka=DateTimeField('Datum i vrijeme povratka',format='%Y-%m-%d %H:%M:%S')
+    datum_polaska=DateTimeField('Datum i vrijeme polaska (gggg-mm-dd hh:mm:ss)',format='%Y-%m-%d %H:%M:%S')
+    datum_povratka=DateTimeField('Datum i vrijeme povratka (gggg-mm-dd hh:mm:ss)',format='%Y-%m-%d %H:%M:%S')
     cijena=DecimalField('cijena', places=2)
     submit=SubmitField('Kreiraj izlet')
 

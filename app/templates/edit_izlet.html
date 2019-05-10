@@ -5,11 +5,15 @@
 <div class="container">
    <div class="row">
       <div class="col-md-12">
-        <h3>Uredi profil</h3>
+        <h3>Uredi izlet</h3>
+        <hr>
+        <p>Slika profila:</p>
         <form action = "{{url_for('slika_izleta', id=id)}}" method = "POST" enctype = "multipart/form-data">
                     <input type = "file" name = "slikai" />
-                    <input type = "submit"/>
+                    <input class="btn btn-primary" type = "submit"/>
                   </form>
+                  <br>
+        <br>
         <form action="{{url_for('edit_izlet',id=id)}}" method="POST"id="dodajizlet" novalidate>
           {{ form.hidden_tag() }}
           <div class="control-group form-group">

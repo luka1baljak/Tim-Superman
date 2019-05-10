@@ -1,22 +1,59 @@
-{% extends "base.html" %}
-
-{% block content %}
+<!DOCTYPE html >
+<html>
+<head>
+	<title>Izleti app</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<link rel = "stylesheet" type="text/css" href="{{url_for('static',filename='style_index.css')}}">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</head>
+<body>
+<!-- Navigacija -->
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #FF8C00;">
+  <a class="navbar-brand" href="{{url_for('pocetna')}}"><img src="{{url_for('static',filename='pictures/logo.png')}}"></a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    
+      <ul class="navbar-nav ml-auto">
+         <li class="nav-item"><a href="{{url_for('register')}}" class="nav-link">Registracija</a></li>
+         <li class="nav-item"><a href="{{url_for('login')}}" class="nav-link">Prijavi se</a></li>
+      </ul>
+  </div>
+</nav>
   <header>
     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
       <ol class="carousel-indicators">
         <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
         <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
         <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="4"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="6"></li>
       </ol>
       <div class="carousel-inner" role="listbox">
-        <!-- Slide One - Set the background image for this slide in the line below -->
+        <!-- Slide 1 - Set the background image for this slide in the line below -->
         <div class="carousel-item active" style="background-image: url('static/pictures/rotator1.jpg')">
         </div>
-        <!-- Slide Two - Set the background image for this slide in the line below -->
+        <!-- Slide 2 - Set the background image for this slide in the line below -->
         <div class="carousel-item" style="background-image: url('static/pictures/rotator2.jpg')">
         </div>
-        <!-- Slide Three - Set the background image for this slide in the line below -->
+        <!-- Slide 3 - Set the background image for this slide in the line below -->
         <div class="carousel-item" style="background-image: url('static/pictures/rotator3.jpg')">
+        </div>
+         <!-- Slide 4 - Set the background image for this slide in the line below -->
+        <div class="carousel-item" style="background-image: url('static/pictures/rotator4.jpg')">
+        </div>
+         <!-- Slide 5 - Set the background image for this slide in the line below -->
+        <div class="carousel-item" style="background-image: url('static/pictures/rotator5.jpg')">
+        </div>
+         <!-- Slide 7 - Set the background image for this slide in the line below -->
+        <div class="carousel-item" style="background-image: url('static/pictures/rotator7.jpg')">
         </div>
       </div>
       <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -29,24 +66,24 @@
       </a>
     </div>
   </header>
-  <!--Main-->
+<!--Main-->
       <div class="container">
     <div class="row text-center">
-          <div class="col">
+          <div class="col-sm-4">
           <div class="counter">
       <i class="fas fa-user "></i>
       <h2 class="timer count-title count-number" data-to="{{ broj_usera }}" data-speed="1500"></h2>
      <p class="count-text ">Korisnici</p> 
     </div>
           </div>
-              <div class="col">
+              <div class="col-sm-4">
                <div class="counter">
       <i class="fas fa-suitcase-rolling"></i>
       <h2 class="timer count-title count-number" data-to="{{ broj_izleta }}" data-speed="1500"></h2>
        <p class="count-text ">Izleti</p>
     </div>
               </div>
-              <div class="col">
+              <div class="col-sm-4">
                   <div class="counter">
       <i class="fas fa-map-marker-alt"></i>
       <h2 class="timer count-title count-number" data-to="{{ broj_jedinstvenih_lokacija }}" data-speed="1500"></h2>
@@ -55,8 +92,7 @@
          </div>
 </div>
 </div>
-<!--Main-->
-<h2>Najpopularniji izleti</h2>
+<h2>Popularni izleti</h2>
 <div class="main">
       <div class="row">
 
@@ -101,15 +137,8 @@
     
     {% endfor %}
   </div>
-  <div>
-    <br>
-    <br>
-    <hr>
-    <br>
-    <br>
-  </div>
 <!-- Footer -->
-<footer class=" py-5 bg-dark ">
+<footer class="py-5 bg-dark ">
     <div class="container">
       <p class="m-0 text-center text-white">Sva prava pridržana  &copy; Izleti.hr 2019</p>
     </div>
@@ -215,6 +244,4 @@ jQuery(function ($) {
   }
 });</script>
 </body>
-</html>   
-{% endblock %}
-
+</html>

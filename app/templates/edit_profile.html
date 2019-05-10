@@ -6,13 +6,15 @@
    <div class="row">
       <div class="col-md-12">
         <h3>Uredi profil</h3>
-
+        <hr>
+        <p>Slika profila:</p>
         <form action = "{{url_for('pp')}}" method = "POST" 
            enctype = "multipart/form-data">
            <input type = "file" name = "file" />
-           <input type = "submit"/>
+           <input class="btn btn-primary" type = "submit"/>
         </form>
-
+        <br>
+        <br>
         <form action="" method="post" novalidate id="dodajizlet" >
           {{ form.hidden_tag() }}
           <div class="control-group form-group">

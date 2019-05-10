@@ -18,7 +18,7 @@ from sqlalchemy import distinct
 from sqlalchemy import func
 
 
-@app.route('/')
+
 @app.route('/index')
 @login_required
 def index():
@@ -50,7 +50,7 @@ def login():
 @app.route('/logout')
 def logout():
     logout_user()
-    return redirect(url_for('login'))
+    return redirect(url_for('pocetna'))
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -298,3 +298,27 @@ def edit_izlet(id):
         form.datum_povratka.data = izlet.datum_povratka
         form.cijena.data = izlet.cijena
     return render_template('edit_izlet.html', title='Edit Izlet',form=form,id=id)
+
+@app.route('/delete_user/<id>')
+@login_required
+def delete_user(id):
+    user=User.query.filter_by(id=id).first()
+    db.session.delete(user)
+    db.session.commit()
+    return redirect(url_for('deleted'))
+
+@app.route('/delete_user')
+def deleted():
+    return render_template('deleted.html')
+
+@app.route('/')
+@app.route('/pocetna')
+def pocetna():
+    broj_usera=User.query.count()
+    broj_izleta=Izlet.query.count()
+    #broj_jedinstvenih_lokacija=Izlet.query.distinct(Izlet.lokacija).count() Izlet.query.order_by(Izlet.timestamp.desc())
+    broj_jedinstvenih_lokacija=Izlet.query.distinct(Izlet.lokacija).group_by(Izlet.lokacija).count()
+    #db.s.query(core.Paper.title, func.count(core.Author.id)).join(core.Paper.authors).group_by(core.Paper.id).all()
+    popular= db.session.query(Izlet, func.count(User.id)).join(Izlet.sudionici).group_by(Izlet.id).limit(3).all()
+    return render_template ('pocetna.html',title='Početna',broj_usera=broj_usera, broj_izleta=broj_izleta, broj_jedinstvenih_lokacija=broj_jedinstvenih_lokacija,popular=popular)
+    
