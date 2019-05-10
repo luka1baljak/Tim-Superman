@@ -3,12 +3,17 @@
 {% block content %}
 <!--Main-->
 <section class="features">
-    <div class="container">
+    <div style="height:75%;width:75%;"class="container">
       <div class="row">
         <div class="col-md-12">
             <ul class="list-group">
-                <li class="list-group-item text-muted" contenteditable="false"><h3>{{izlet.naziv}}</h3>
-                    <h4>Lokacija:{{izlet.lokacija}}</h4> <i class="fas fa-undo" onClick="location.href='{{url_for('index')}}'"></i></li>
+                <li class="list-group-item text-muted" contenteditable="false">
+                    <h3>{{izlet.naziv}}</h3>
+                    <h4>Lokacija:{{izlet.lokacija}}</h4>
+                    
+                    <h4>Kreator izleta:{{creator.ime}} {{creator.prezime}}</h4> 
+                    
+                    <i class="fas fa-undo" onClick="location.href='{{url_for('index')}}'"></i></li>
                 <li class="list-group-item text-left"> 
                     
                         {% if izlet.slika_izleta %}

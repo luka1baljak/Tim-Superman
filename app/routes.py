@@ -204,8 +204,8 @@ def moji_prijatelji():
 @login_required
 def izlet(id):
     izlet = Izlet.query.filter_by(id=id).first_or_404()
-
-    return render_template('izlet.html', izlet=izlet)
+    creator=User.query.filter(User.id==izlet.creator_id).first()
+    return render_template('izlet.html', izlet=izlet, creator=creator)
 
 
 #Upload i pp sluze za uploadanje slika ua izlete
@@ -303,6 +303,10 @@ def edit_izlet(id):
 @login_required
 def delete_user(id):
     user=User.query.filter_by(id=id).first()
+    izleti_za_brisanje=Izlet.query.filter(Izlet.creator_id==user.id)
+    for i in izleti_za_brisanje:
+        db.session.delete(i)
+        
     db.session.delete(user)
     db.session.commit()
     return redirect(url_for('deleted'))
