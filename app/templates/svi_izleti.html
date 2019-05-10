@@ -47,12 +47,28 @@
 		</div>
 		
 		{% endfor %}
+
+
+
 	</div>
 </div>
 </section>
 
 
+<div class="container text-center" >
 
+  <ul class="pagination ">
+  	{% if prev_url %}
+    <li class="page-item" ><a style="display: inline;" class="page-link" href="{{ prev_url }}">Prethodni</a>
+	{% endif %}
+
+	{% if next_url %}
+    <a style="display: inline;"class="page-link" href="{{ next_url }}">Sljedeći</a>
+    {% endif %}
+    </li>
+  </ul>
+</div>
+  
 <!-- Footer -->
 <footer class="py-5 bg-dark ">
     <div class="container">

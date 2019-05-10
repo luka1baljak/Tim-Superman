@@ -8,3 +8,4 @@ class Config(object):
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     UPLOAD_FOLDER = os.path.join(basedir + '/app/static/img/')
     UPLOAD_FOLDER2 = os.path.join(basedir + '/app/static/img2/')
+    POSTS_PER_PAGE=3

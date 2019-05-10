@@ -29,11 +29,13 @@
 			<p style="font-size:12.5px;">{{i.cijena}}</p>
 			</div>
 			<div class="rating">
-				<i class="fa fa-star"></i>
-				<i class="fa fa-star"></i>
-				<i class="fa fa-star"></i>
-				<i class="fa fa-star"></i>
-				<i class="fa fa-star"></i>
+				{% if i.sudionici %}
+				{% for j in i.sudionici%}
+				<i class="fas fa-user"></i>
+				{%endfor%}
+				{%else%}
+
+				{%endif%}
 			</div>
 			</div>
 			<div class="feature-details">
@@ -48,7 +50,19 @@
 	</div>
 </div>
 </section>
+<div class="container text-center" >
 
+  <ul class="pagination ">
+  	{% if prev_url %}
+    <li class="page-item" ><a style="display: inline;" class="page-link" href="{{ prev_url }}">Prethodni</a>
+	{% endif %}
+
+	{% if next_url %}
+    <a style="display: inline;"class="page-link" href="{{ next_url }}">Sljedeći</a>
+    {% endif %}
+    </li>
+  </ul>
+</div>
 <footer class="py-5 bg-dark ">
     <div class="container">
       <p class="m-0 text-center text-white">Sva prava pridržana  &copy; Izleti.hr 2019</p>

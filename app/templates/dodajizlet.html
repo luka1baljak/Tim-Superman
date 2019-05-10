@@ -86,26 +86,25 @@
             <div class="control-group form-group">
             <div class="controls">
                 {{ form.datum_polaska.label }}<br>
-                {{ form.datum_polaska(id="input", width="312") }}<br>
+                {{ form.datum_polaska(class="form-control",id="ime") }}<br>
                 {% for error in form.datum_polaska.errors %}
                 <span style="color: red;">[{{ error }}]</span>
                 {% endfor %}
-                <script>
-                   $('#input').datetimepicker({ footer: true, modal: true });
-                 </script>
             </div>
           </div>
 
           <div class="control-group form-group">
             <div class="controls">
                 {{ form.datum_povratka.label }}<br>
-                {{ form.datum_povratka(id="input2", width="312") }}<br>
+                {{ form.datum_povratka(class="form-control",id="ime") }}<br>
                 {% for error in form.datum_povratka.errors %}
                 <span style="color: red;">[{{ error }}]</span>
                 {% endfor %}
-                <script>
-                   $('#input2').datetimepicker({ footer: true, modal: true });
-                 </script>
+            </div>
+          </div>
+               <!--  <script>
+                  $('#input2').datetimepicker({ footer: true, modal: true });
+                 </script>-->
                 
             </div>
           </div>

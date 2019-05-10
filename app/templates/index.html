@@ -65,7 +65,7 @@
     <div class="col-md-4">
       <div class="feature-box">
       <div class="feature-img">
-      <a href="{{ url_for('izlet', id=p.id) }}"> 
+      <a href="{{ url_for('izlet', id=p[0].id) }}"> 
 
         {% if p[0].slika_izleta %}
 
@@ -82,11 +82,13 @@
       <p style="font-size:12.5px;">{{p[0].cijena}}</p>
       </div>
       <div class="rating">
-        <i class="fa fa-star"></i>
-        <i class="fa fa-star"></i>
-        <i class="fa fa-star"></i>
-        <i class="fa fa-star"></i>
-        <i class="fa fa-star"></i>
+        {% if p[0].sudionici %}
+        {% for j in p[0].sudionici%}
+        <i class="fas fa-user special"></i>
+        {%endfor%}
+        {%else%}
+
+        {%endif%}
       </div>
       </div>
       <div class="feature-details">

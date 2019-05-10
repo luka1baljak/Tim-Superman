@@ -22,7 +22,7 @@
         <div class="col-12 form-input">
           <form action="" method="post" novalidate>
             {{ form.hidden_tag() }}
-                <div class="form-group">
+                <div class="form-group" id="loginf">
                     {{ form.username.label }}<br>
                     {{ form.username(class="form-control") }}<br>
                     <p>
@@ -31,7 +31,7 @@
                     {% endfor %}
                     </p>
                 </div>
-                <div class="form-group">
+                <div class="form-group" id="passf">
                         {{ form.password.label }}<br>
                         {{ form.password(class="form-control") }}<br>
                         <p>

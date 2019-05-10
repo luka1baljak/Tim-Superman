@@ -51,6 +51,24 @@ body {
 	/* content: "\f023"; */
 }
 
+#loginf::before {
+
+	content: "\f007"; 
+	margin-top: 30px;
+	
+}
+
+#passf::before {
+
+	 content: "\f023";
+	 margin-top: 30px;
+}
+
+#emailf::before {
+
+	content: "\f1fa"; 
+	margin-top: 30px;
+}
 
 .form-input button {
 	width: 40%;

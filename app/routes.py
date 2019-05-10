@@ -10,7 +10,7 @@ from werkzeug.utils import secure_filename
 from app import db
 from app.forms import RegistrationForm
 from app.forms import EditProfileForm
-from app.forms import CreateIzletForm
+from app.forms import CreateIzletForm, EditIzletForm
 import os
 from flask import Flask, render_template, request
 from werkzeug import secure_filename
@@ -154,6 +154,7 @@ def unfriend(username):
 @login_required
 def dodajizlet():
     form = CreateIzletForm()
+
     if form.validate_on_submit():
         izlet=Izlet(naziv=form.naziv.data, lokacija=form.lokacija.data, opis=form.opis.data, datum_polaska=form.datum_polaska.data, datum_povratka=form.datum_povratka.data, cijena=form.cijena.data, creator_id=current_user.id)
         db.session.add(izlet)
@@ -165,26 +166,38 @@ def dodajizlet():
 @app.route('/svi_korisnici')
 @login_required
 def svi_korisnici():
-    korisnici=User.query.filter(User.id!=current_user.id)
-    return render_template('svi_korisnici.html', title='Korisnici',korisnici=korisnici)
+    page = request.args.get('page', 1, type=int)
+    korisnici=User.query.filter(User.id!=current_user.id).paginate(page, app.config['POSTS_PER_PAGE'], False)
+    next_url = url_for('svi_korisnici', page=korisnici.next_num) if korisnici.has_next else None
+    prev_url = url_for('svi_korisnici', page=korisnici.prev_num) if korisnici.has_prev else None
+    return render_template('svi_korisnici.html', title='Korisnici',korisnici=korisnici.items,next_url=next_url,prev_url=prev_url)
 
 @app.route('/svi_izleti')
 @login_required
 def svi_izleti():
-    izleti=Izlet.query.all()
-    return render_template('svi_izleti.html', title='Izleti',izleti=izleti)
+    page = request.args.get('page', 1, type=int)
+    izleti=Izlet.query.paginate(page, app.config['POSTS_PER_PAGE'], False)
+    next_url = url_for('svi_izleti', page=izleti.next_num) if izleti.has_next else None
+    prev_url = url_for('svi_izleti', page=izleti.prev_num) if izleti.has_prev else None
+    return render_template('svi_izleti.html', title='Izleti',izleti=izleti.items,next_url=next_url,prev_url=prev_url)
 
 @app.route('/moji_izleti')
 @login_required
 def moji_izleti():
-    izleti=Izlet.query.filter(Izlet.creator_id==current_user.id)
-    return render_template('moji_izleti.html', title='Izleti',izleti=izleti)
+    page = request.args.get('page', 1, type=int)
+    izleti=Izlet.query.filter(Izlet.creator_id==current_user.id).paginate(page, app.config['POSTS_PER_PAGE'], False)
+    next_url = url_for('moji_izleti', page=izleti.next_num) if izleti.has_next else None
+    prev_url = url_for('moji_izleti', page=izleti.prev_num) if izleti.has_prev else None
+    return render_template('moji_izleti.html', title='Izleti',izleti=izleti.items,next_url=next_url,prev_url=prev_url)
 
 @app.route('/moji_prijatelji')
 @login_required
 def moji_prijatelji():
-    frends=current_user.friends
-    return render_template('friends.html', title='Home Page',frends=frends)
+    page = request.args.get('page', 1, type=int)
+    frends=current_user.friends.paginate(page, app.config['POSTS_PER_PAGE'], False)
+    next_url = url_for('moji_prijatelji', page=frends.next_num) if frends.has_next else None
+    prev_url = url_for('moji_prijatelji', page=frends.prev_num) if frends.has_prev else None
+    return render_template('friends.html', title='Home Page',frends=frends.items)
 
 #Izleti
 @app.route('/izlet/<id>')
@@ -245,3 +258,43 @@ def prestani_sudionik(id):
     db.session.commit()
     flash('Odjavio si se sa {}.'.format(izlet.naziv))
     return redirect(url_for('izlet', id=id))
+
+
+@app.route('/delete_izlet/<id>')
+@login_required
+def delete_izlet(id):
+    izlet=Izlet.query.filter_by(id=id).first()
+    if izlet is None:
+        return redirect(url_for('index'))
+    if izlet.creator_id == current_user.id:
+        db.session.delete(izlet)
+        db.session.commit()
+        return redirect(url_for('moji_izleti'))
+
+
+
+
+@app.route('/edit_izlet/<id>', methods=['GET', 'POST'])
+@login_required
+def edit_izlet(id):
+    form = EditIzletForm()
+    izlet=Izlet.query.filter_by(id=id).first()
+
+    if form.validate_on_submit():
+        izlet.naziv= form.naziv.data
+        izlet.lokacija= form.lokacija.data
+        izlet.opis = form.opis.data
+        izlet.datum_polaska = form.datum_polaska.data
+        izlet.datum_povratka = form.datum_povratka.data
+        izlet.cijena = form.cijena.data
+        db.session.commit()
+        flash('Vaše promijene su spremljene.')
+        return redirect(url_for('index'))
+    elif request.method == 'GET':
+        form.naziv.data = izlet.naziv
+        form.lokacija.data = izlet.lokacija
+        form.opis.data = izlet.opis
+        form.datum_polaska.data = izlet.datum_polaska
+        form.datum_povratka.data = izlet.datum_povratka
+        form.cijena.data = izlet.cijena
+    return render_template('edit_izlet.html', title='Edit Izlet',form=form,id=id)

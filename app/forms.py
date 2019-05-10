@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, DateField, FileField, DecimalField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, DateField, FileField, DecimalField, DateTimeField
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
 from app.models import User
 from flask_wtf.file import FileField, FileRequired, FileAllowed
@@ -52,11 +52,22 @@ class CreateIzletForm(FlaskForm):
     naziv = StringField('Naziv izleta', validators=[DataRequired()])
     lokacija = StringField('Destinacija', validators=[DataRequired()])
     opis=TextAreaField('Opis izleta', validators=[DataRequired(),Length(min=0, max=500)])
-    datum_polaska=DateField('Datum polaska',id='datepick',format='%d/%m/%Y')
-    datum_povratka=DateField('Datum povratka', format='%d/%m/%Y')
+    datum_polaska=DateTimeField('Datum i vrijeme polaska',format='%Y-%m-%d %H:%M:%S')
+    datum_povratka=DateTimeField('Datum i vrijeme povratka',format='%Y-%m-%d %H:%M:%S')
     cijena=DecimalField('cijena', places=2)
     submit=SubmitField('Kreiraj izlet')
 
 class ProfilePictureForm(FlaskForm):
     url=FileField('url')
     submit=SubmitField('Upload picture')
+
+
+class EditIzletForm(FlaskForm):
+    naziv = StringField('Naziv izleta', validators=[DataRequired()])
+    lokacija = StringField('Destinacija', validators=[DataRequired()])
+    opis=TextAreaField('Opis izleta', validators=[DataRequired(),Length(min=0, max=500)])
+    datum_polaska=DateTimeField('Datum i vrijeme polaska',format='%H:%M %d/%m/%Y')
+    datum_povratka=DateTimeField('Datum i vrijeme povratka',format='%H:%M %d/%m/%Y')
+    cijena=DecimalField('cijena', places=2)
+    submit=SubmitField('Spremi promjene')
+

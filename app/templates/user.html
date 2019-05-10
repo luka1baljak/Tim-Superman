@@ -8,11 +8,11 @@
                     <div class="col-md-4">
                         <div class="profile-img">
                             {% if user.profilna_slika %}
-                                <img style="height:100%;width:100%" src="{{ url_for('static', filename='img/' + user.profilna_slika) }}" />
+                                <img style="height:150px;width:150px" src="{{ url_for('static', filename='img/' + user.profilna_slika) }}" />
                                 
                                 {% else %}
 
-                                <img  style="height:100%;width:100%" src="{{ url_for('static', filename='img/korisnik.jpg') }}" />
+                                <img  style="height:150px;width:150px" src="{{ url_for('static', filename='img/korisnik.jpg') }}" />
                                 {% endif %}
                         </div>
                     </div>
@@ -124,8 +124,18 @@
                 </div>
             </form>           
         </div>
+        <div>
+            <p>
+                <br>
+                <br>
+                <hr>
+                <br>
+                <br>
+
+            </p>
+        </div>
 <!-- Footer -->
-<footer class="py-5 bg-dark fixed navbar-padded">
+<footer class="py-5 bg-dark fixed-bottom navbar-padded">
     <div class="container">
       <p class="m-0 text-center text-white">Sva prava pridržana  © Izleti.hr 2019</p>
     </div>
